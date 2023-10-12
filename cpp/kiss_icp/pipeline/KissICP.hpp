@@ -72,6 +72,15 @@ public:
     // Extra C++ API to facilitate ROS debugging
     std::vector<Eigen::Vector3d> LocalMap() const { return local_map_.Pointcloud(); };
     std::vector<Sophus::SE3d> poses() const { return poses_; };
+    void resetAndInitPoses(Sophus::SE3d initial_pose)
+    {
+        poses_.clear();
+        // Push two identical initial poses to the poses_ vector
+        // This is done in order to make sure we start predicting from this
+        // initial pose.
+        poses_.push_back(initial_pose);
+        poses_.push_back(initial_pose);
+    };
 
 private:
     // KISS-ICP pipeline modules
